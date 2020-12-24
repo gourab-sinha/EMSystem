@@ -8,12 +8,14 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
 import { EmployeeListComponent } from './employee/employee-list/employee-list.component';
+import { EmployeeCreateComponent } from './employee/employee-create/employee-create.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    EmployeeListComponent
+    EmployeeListComponent,
+    EmployeeCreateComponent
   ],
   imports: [
     BrowserModule,
