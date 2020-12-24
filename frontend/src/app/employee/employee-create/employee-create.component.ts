@@ -35,7 +35,7 @@ export class EmployeeCreateComponent implements OnInit {
       lastName: this.form.value.lastName,
       email: this.form.value.email,
       role: this.form.value.role,
-      status: this.form.value.status
+      status: Boolean(this.form.value.status)
     };
 
     this.employeeService.addEmployee(employee);
