@@ -3,7 +3,7 @@
         <mat-form-field>
             <input 
             type="text" 
-            mat-input 
+            matInput
             placeholder="Enter first name"
             formControlName="firstName"
             >
@@ -11,11 +11,11 @@
             *ngIf="form.get('firstName').invalid"
             >Please enter firstname</mat-error>
         </mat-form-field>
-
+        <br>
         <mat-form-field>
             <input 
             type="text" 
-            mat-input 
+            matInput 
             placeholder="Enter last name"
             formControlName="lastName"
             >
@@ -23,11 +23,11 @@
             *ngIf="form.get('lastName').invalid"
             >Please enter lastName</mat-error>
         </mat-form-field>
-
+        <br>
         <mat-form-field>
             <input 
             type="email" 
-            mat-input 
+            matInput
             placeholder="Enter email"
             formControlName="email"
             >
@@ -35,8 +35,8 @@
             *ngIf="form.get('email').invalid"
             >Please enter lastName</mat-error>
         </mat-form-field>
-
-        <mat-form-field appearance="fill">
+        <br>
+        <mat-form-field>
             <mat-label>Role</mat-label>
             <mat-select formControlName="role">
                 <mat-option *ngFor="let role of roles" [value]="role.value">
@@ -44,14 +44,11 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field>
-            <input 
-            type="checkbox" 
-            mat-checkbox 
-            placeholder="Status"
-            formControlName="status"
-            >
-        </mat-form-field>
+        <br>
+        <mat-checkbox
+        placeholder="Status"
+        formControlName="status"
+        >Status</mat-checkbox>
         <hr>
         <button type="submit" mat-raised-button color="accent">Save Employee</button>
     </form>

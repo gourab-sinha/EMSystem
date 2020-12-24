@@ -8,12 +8,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
 import { EmployeeListComponent } from './employee/employee-list/employee-list.component';
 import { EmployeeCreateComponent } from './employee/employee-create/employee-create.component';
+import { AppRoutingModule } from './app-routing.model';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { EmployeeCreateComponent } from './employee/employee-create/employee-cre
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
+    AppRoutingModule,
     MatToolbarModule,
     MatButtonModule,
     MatExpansionModule,
@@ -34,6 +36,7 @@ import { EmployeeCreateComponent } from './employee/employee-create/employee-cre
     MatInputModule,
     MatCheckboxModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
