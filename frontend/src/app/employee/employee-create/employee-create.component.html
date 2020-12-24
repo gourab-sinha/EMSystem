@@ -1,1 +1,58 @@
-<p>employee-create works!</p>
+<mat-card>
+    <form [formGroup]="form" (submit)="onSaveEmployee()">
+        <mat-form-field>
+            <input 
+            type="text" 
+            mat-input 
+            placeholder="Enter first name"
+            formControlName="firstName"
+            >
+            <mat-error 
+            *ngIf="form.get('firstName').invalid"
+            >Please enter firstname</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input 
+            type="text" 
+            mat-input 
+            placeholder="Enter last name"
+            formControlName="lastName"
+            >
+            <mat-error 
+            *ngIf="form.get('lastName').invalid"
+            >Please enter lastName</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input 
+            type="email" 
+            mat-input 
+            placeholder="Enter email"
+            formControlName="email"
+            >
+            <mat-error 
+            *ngIf="form.get('email').invalid"
+            >Please enter lastName</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Role</mat-label>
+            <mat-select formControlName="role">
+                <mat-option *ngFor="let role of roles" [value]="role.value">
+                    {{role.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <input 
+            type="checkbox" 
+            mat-checkbox 
+            placeholder="Status"
+            formControlName="status"
+            >
+        </mat-form-field>
+        <hr>
+        <button type="submit" mat-raised-button color="accent">Save Employee</button>
+    </form>
+</mat-card>
