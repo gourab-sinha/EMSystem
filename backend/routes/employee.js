@@ -37,10 +37,26 @@ router.post("", (req, res, next)=>{
 });
 
 router.get("", (req, res, next)=>{
-    let employees = [];
-    res.status(200).json({
-        message: 'Successfully completed the request',
-        employees: employees
+    Employee.find().then(documents =>{
+        console.log(documents);
+        res.status(200).json({
+            message: "Successfully fetched",
+            employees: documents.map(employee => {
+                return {
+                    id: employee._id,
+                    firstName: employee.firstName,
+                    lastName: employee.lastName,
+                    email: employee.email,
+                    role: employee.role,
+                    status: employee.status
+                };
+            })
+        });
+    }).catch(err=>{
+        console.log(err);
+        res.status(404).json({
+            message: "No data found"
+        });
     });
 });
 

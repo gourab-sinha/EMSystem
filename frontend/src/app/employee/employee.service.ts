@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { Employee } from "./employee.model";
 import { Subject } from 'rxjs';
 import { HttpClient } from "@angular/common/http";
+import { map } from 'rxjs/operators';
 
 @Injectable({providedIn: "root"})
 export class EmployeeService{
@@ -10,8 +11,21 @@ export class EmployeeService{
     private employeesUpdated = new Subject<Employee[]>();
     constructor(private router: Router, private http: HttpClient){}
     getEmployees(){
-        this.http.get<{message: string, employees: Employee[]}>("http://localhost:3000/api/employees").subscribe((employeesData)=>{
-            this.employees = employeesData.employees;
+        this.http.get<{message: string, employees: any}>("http://localhost:3000/api/employees").pipe(
+            map((employeeData)=>{
+                return employeeData.employees.map(employee=>{
+                    return {
+                        id: employee._id,
+                        firstName: employee.firstName,
+                        lastName: employee.lastName,
+                        email: employee.email,
+                        role: employee.role,
+                        status: employee.status
+                    };
+                });
+            })
+        ).subscribe((transformedEmployeesData)=>{
+            this.employees = transformedEmployeesData;
             this.employeesUpdated.next([...this.employees]);
         });
         return [...this.employees];
