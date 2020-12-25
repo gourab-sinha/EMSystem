@@ -10,5 +10,9 @@
         </p>
         <p *ngIf="employee.status">Active</p>
         <p *ngIf="!employee.status">Inactive</p>
+        <mat-action-row>
+            <button mat-button color="primary">EDIT</button>
+            <button *ngIf="employee.status" mat-button color="warn">DELETE</button>
+        </mat-action-row>
     </mat-expansion-panel>
 </mat-accordion>
