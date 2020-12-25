@@ -15,6 +15,7 @@ import { HeaderComponent } from './header/header.component';
 import { EmployeeListComponent } from './employee/employee-list/employee-list.component';
 import { EmployeeCreateComponent } from './employee/employee-create/employee-create.component';
 import { AppRoutingModule } from './app-routing.model';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { AppRoutingModule } from './app-routing.model';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
+    HttpClientModule,
     AppRoutingModule,
     MatToolbarModule,
     MatButtonModule,

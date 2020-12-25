@@ -20,7 +20,7 @@ router.get("", (req, res, next)=>{
         {firstName: 'Gourab', lastName: 'Sinha', role: 'Software Developer', email: 'gourab@g.com', status: true},
         {firstName: 'Gourab', lastName: 'Sinha', role: 'Software Developer', email: 'gourab@g.com', status: true},
         {firstName: 'Gourab', lastName: 'Sinha', role: 'Software Developer', email: 'gourab@g.com', status: true},
-        {firstName: 'Gourab', lastName: 'Sinha', role: 'Software Developer', email: 'gourab@g.com', status: true},
+        {firstName: 'Gourab', lastName: 'Sinha', role: 'Software Developer', email: 'gourab@g.com', status: false},
     ];
     res.status(200).json({
         message: 'Successfully completed the request',

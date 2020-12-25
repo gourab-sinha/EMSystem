@@ -39,6 +39,7 @@ export class EmployeeCreateComponent implements OnInit {
     }
 
     const employee :Employee = {
+      id: null,
       firstName: this.form.value.firstName,
       lastName: this.form.value.lastName,
       email: this.form.value.email,
