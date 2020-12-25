@@ -27,7 +27,7 @@ export class EmployeeCreateComponent implements OnInit {
     this.form = new FormGroup({
       firstName: new FormControl(null, {validators: [Validators.required, Validators.minLength(3)]}),
       lastName: new FormControl(null, {validators: [Validators.required, Validators.minLength(3)]}),
-      email: new FormControl(null, {validators: [Validators.required]}),
+      email: new FormControl(null, {validators: [Validators.required, Validators.email]}),
       role: new FormControl(null, {validators: [Validators.required]}),
       status: new FormControl(false,{validators: [Validators.required]}),
     });
