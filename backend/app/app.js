@@ -4,9 +4,13 @@ const path = require('path');
 const mongoose = require('../db/connection');
 
 const bodyParser = require('body-parser');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
 
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+
+
+// Routes
+const employeeRoutes = require('../routes/employee');
 
 // Requests types and access control
 app.use((req,res,next)=>{
@@ -20,10 +24,19 @@ app.use((req,res,next)=>{
     next();
 });
 
+app.post("", (req, res, next)=>{
+    console.log(req.body);
+    res.status(201).json({
+        message: "Successfully accepted the test post request",
+    });
+});
+
 app.get("", (req,res,next)=>{
     console.log("Request came");
     res.status(200).json({
         message: "Successfully returned request"
     });
 });
+
+app.use('/api/employees/', employeeRoutes);
 module.exports = app;
