@@ -19,7 +19,14 @@ router.post("", (req, res, next)=>{
         console.log(employeeData);
         res.status(201).json({
             message: 'Successfully saved',
-            employee: employeeData
+            employeeInfo: {
+                id: employeeData._id,
+                firstName: employeeData.firstName,
+                lastName: employeeData.lastName,
+                email: employeeData.email,
+                role: employeeData.role,
+                status: employeeData.status
+            }
         });
     }).catch(err=>{
         console.log(err);
@@ -30,13 +37,7 @@ router.post("", (req, res, next)=>{
 });
 
 router.get("", (req, res, next)=>{
-    const employees = [
-        {firstName: 'Gourab', lastName: 'Sinha', role: 'Software Developer', email: 'gourab@g.com', status: true},
-        {firstName: 'Gourab', lastName: 'Sinha', role: 'Software Developer', email: 'gourab@g.com', status: true},
-        {firstName: 'Gourab', lastName: 'Sinha', role: 'Software Developer', email: 'gourab@g.com', status: true},
-        {firstName: 'Gourab', lastName: 'Sinha', role: 'Software Developer', email: 'gourab@g.com', status: true},
-        {firstName: 'Gourab', lastName: 'Sinha', role: 'Software Developer', email: 'gourab@g.com', status: false},
-    ];
+    let employees = [];
     res.status(200).json({
         message: 'Successfully completed the request',
         employees: employees
