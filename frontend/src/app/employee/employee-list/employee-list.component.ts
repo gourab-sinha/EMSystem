@@ -10,10 +10,10 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrls: ['./employee-list.component.css']
 })
 export class EmployeeListComponent implements OnInit, OnDestroy {
-  totalEmployees = 10;
-  employeesPerPage = 1;
+  totalEmployees = 0;
+  employeesPerPage = 2;
   pageSizeOptons = [1,2,5,10];
-  currentPage = 0;
+  currentPage = 1;
   isLoading = false;
   employees: Employee[] = [];
   private employeesSubs: Subscription;
@@ -22,8 +22,10 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isLoading = true;
     this.employeeService.getEmployees(this.employeesPerPage, 1);
-    this.employeesSubs = this.employeeService.getEmployeeUpdateListener().subscribe((employees: Employee[])=>{
-      this.employees = employees;
+    this.employeesSubs = this.employeeService.getEmployeeUpdateListener().subscribe(
+      (employeeData:{employees: Employee[], totalCount: number})=>{
+      this.employees = employeeData.employees;
+      this.totalEmployees = employeeData.totalCount;
       this.isLoading = false;
     });
     console.log(this.employees);
@@ -35,12 +37,17 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   }
 
   onDelete(employeeId: string){
-    this.employeeService.deleteEmployee(employeeId);
+    this.isLoading = true;
+    this.employeeService.deleteEmployee(employeeId).subscribe(()=>{
+      this.employeeService.getEmployees(this.employeesPerPage, this.currentPage);
+    });
   }
 
   onChangedPage(pageEvent: PageEvent){
-    this.currentPage = pageEvent.pageIndex+1;
+    this.isLoading = true;
+    this.currentPage = pageEvent.pageIndex + 1;
     this.employeesPerPage = pageEvent.pageSize;
+    console.log(this.totalEmployees);
     this.employeeService.getEmployees(this.employeesPerPage, this.currentPage);
   }
 }

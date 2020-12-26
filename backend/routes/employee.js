@@ -81,6 +81,7 @@ router.get("/:id", (req,res,next)=>{
 router.get("", (req, res, next)=>{
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
+    let fetchedEmployees;
     console.log(pageSize + ' ' + currentPage);
     const employeeQuery = Employee.find();
     if(pageSize && currentPage){
@@ -88,9 +89,13 @@ router.get("", (req, res, next)=>{
     }
     employeeQuery.find().then(documents =>{
         console.log(documents);
+        this.fetchedEmployees = documents;
+        return Employee.count();
+    }).then(count =>{
         res.status(200).json({
             message: "Successfully fetched",
-            employees: documents
+            employees: this.fetchedEmployees,
+            totalCount: count
         });
     }).catch(err=>{
         console.log(err);

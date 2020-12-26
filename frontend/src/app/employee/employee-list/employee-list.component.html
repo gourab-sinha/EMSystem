@@ -17,11 +17,7 @@
         </mat-action-row>
     </mat-expansion-panel>
 </mat-accordion>
-<mat-paginator 
-[length]="totalEmployees" 
-[pageSize]="employeesPerPage" 
-[pageSizeOptions]="pageSizeOptons" 
-[pageIndex]="currentPage"
-(page)="onChangedPage($event)"
-></mat-paginator>
+<mat-paginator [length]="totalEmployees" [pageSize]="employeesPerPage" [pageSizeOptions]="pageSizeOptons"
+(page)="onChangedPage($event)" *ngIf="employees.length > 0"></mat-paginator>
+
 <p *ngIf="employees.length <=0 && !isLoading">No employee exists</p>

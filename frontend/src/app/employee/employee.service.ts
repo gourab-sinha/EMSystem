@@ -8,13 +8,14 @@ import { map } from 'rxjs/operators';
 @Injectable({providedIn: "root"})
 export class EmployeeService{
     private employees: Employee[] = [];
-    private employeesUpdated = new Subject<Employee[]>();
+    private employeesUpdated = new Subject<{employees: Employee[], totalCount: number}>();
     constructor(private router: Router, private http: HttpClient){}
     getEmployees(employeesPerPage: number, currentPage: number){
         const queryParams = `?pagesize=${employeesPerPage}&page=${currentPage}`;
-        this.http.get<{message: string, employees: any}>("http://localhost:3000/api/employees/" + queryParams).pipe(
+        this.http.get<{message: string, employees: any, totalCount: number}>("http://localhost:3000/api/employees/" + queryParams).pipe(
             map(employeeData =>{
-                return employeeData.employees.map(employee=>{
+                return {
+                    employees: employeeData.employees.map(employee=>{
                     return {
                         id: employee._id,
                         firstName: employee.firstName,
@@ -23,13 +24,13 @@ export class EmployeeService{
                         role: employee.role,
                         status: employee.status
                     };
-                });
+                }), totalCount: employeeData.totalCount
+                };
             })
         ).subscribe((transformedEmployeesData)=>{
-            this.employees = transformedEmployeesData;
-            this.employeesUpdated.next([...this.employees]);
+            this.employees = transformedEmployeesData.employees;
+            this.employeesUpdated.next({employees: [...this.employees], totalCount: transformedEmployeesData.totalCount});
         });
-        return [...this.employees];
     }
 
     getEmployeeUpdateListener(){
@@ -42,9 +43,6 @@ export class EmployeeService{
 
     addEmployee(employee: Employee){
         this.http.post<{message: string, employee: Employee}>("http://localhost:3000/api/employees", employee).subscribe((response)=>{
-            console.log(response);
-            this.employees.push(response.employee);
-            this.employeesUpdated.next([...this.employees]);
             this.router.navigate(["/"]);
         });
         
@@ -54,21 +52,11 @@ export class EmployeeService{
         console.log("Service udpate");
         console.log(employeeInfo.id);
         this.http.put<{message: string}>("http://localhost:3000/api/employees/" + employeeInfo.id, employeeInfo).subscribe(response =>{
-            console.log(response);
-            const updatedEmployees = [...this.employees];
-            const oldEmployeeIndex = updatedEmployees.findIndex(employee => employee.id === employeeInfo.id);
-            this.employees = updatedEmployees;
-            this.employeesUpdated.next([...this.employees]);
             this.router.navigate(["/"]);
         });
     }
 
     deleteEmployee(employeeId: string){
-        this.http.delete("http://localhost:3000/api/employees/" + employeeId).subscribe(()=>{
-            console.log("Deleted");
-            const updatedEmployees = this.employees.filter(employee=> employee.id !== employeeId);
-            this.employees= updatedEmployees;
-            this.employeesUpdated.next([...this.employees]);
-        });
+        return this.http.delete("http://localhost:3000/api/employees/" + employeeId);
     }
 }
