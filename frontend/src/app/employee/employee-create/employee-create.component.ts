@@ -24,6 +24,7 @@ export class EmployeeCreateComponent implements OnInit {
     {value: 'Team Lead', viewValue:'Team Lead'},
     {value: 'Technical Architech', viewValue:'Technical Architech'},
   ];
+  isLoading = false;
   constructor(public employeeService: EmployeeService, public route: ActivatedRoute) { }
   
   ngOnInit(): void {
@@ -39,8 +40,10 @@ export class EmployeeCreateComponent implements OnInit {
         this.mode = 'edit';
         this.employeeId = paramMap.get('employeeId');
         console.log(this.employeeId);
+        this.isLoading = true;
         this.employeeService.getEmployee(this.employeeId).subscribe(employeeData=>{
           this.employee = employeeData.employee;
+          this.isLoading = false;
           // console.log(employeeData.employee);
         });
         console.log("OnInit");
@@ -78,7 +81,7 @@ export class EmployeeCreateComponent implements OnInit {
       this.employeeService.updateEmployee(employee);
     }
     
-    // this.form.reset();
+    this.form.reset();
   }
 
 }

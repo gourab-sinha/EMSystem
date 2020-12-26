@@ -9,14 +9,17 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./employee-list.component.css']
 })
 export class EmployeeListComponent implements OnInit, OnDestroy {
+  isLoading = false;
   employees: Employee[] = [];
   private employeesSubs: Subscription;
   constructor(public employeeService: EmployeeService) { }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.employeeService.getEmployees();
     this.employeesSubs = this.employeeService.getEmployeeUpdateListener().subscribe((employees: Employee[])=>{
       this.employees = employees;
+      this.isLoading = false;
     });
     console.log(this.employees);
   }

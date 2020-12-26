@@ -58,7 +58,7 @@ export class EmployeeService{
             const oldEmployeeIndex = updatedEmployees.findIndex(employee => employee.id === employeeInfo.id);
             this.employees = updatedEmployees;
             this.employeesUpdated.next([...this.employees]);
-
+            this.router.navigate(["/"]);
         });
     }
 
