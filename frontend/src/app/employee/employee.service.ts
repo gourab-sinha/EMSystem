@@ -36,10 +36,7 @@ export class EmployeeService{
     }
 
     getEmployee(employeeId: string){
-        const employee = {...this.employees.find(employee => employee.id===employeeId)};
-        console.log("Get Employee");
-        console.log(employee)
-        return employee;
+        return this.http.get<{message: string, employee: Employee}>("http://localhost:3000/api/employees/" + employeeId);
     }    
 
     addEmployee(employee: Employee){
@@ -57,10 +54,14 @@ export class EmployeeService{
         console.log(employeeInfo.id);
         this.http.put<{message: string}>("http://localhost:3000/api/employees/" + employeeInfo.id, employeeInfo).subscribe(response =>{
             console.log(response);
+            const updatedEmployees = [...this.employees];
+            const oldEmployeeIndex = updatedEmployees.findIndex(employee => employee.id === employeeInfo.id);
+            this.employees = updatedEmployees;
+            this.employeesUpdated.next([...this.employees]);
 
         });
     }
-    
+
     deleteEmployee(employeeId: string){
         this.http.delete("http://localhost:3000/api/employees/" + employeeId).subscribe(()=>{
             console.log("Deleted");

@@ -39,7 +39,10 @@ export class EmployeeCreateComponent implements OnInit {
         this.mode = 'edit';
         this.employeeId = paramMap.get('employeeId');
         console.log(this.employeeId);
-        this.employee = this.employeeService.getEmployee(this.employeeId);
+        this.employeeService.getEmployee(this.employeeId).subscribe(employeeData=>{
+          this.employee = employeeData.employee;
+          // console.log(employeeData.employee);
+        });
         console.log("OnInit");
         console.log(this.employee);
       }

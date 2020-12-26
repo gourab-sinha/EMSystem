@@ -54,6 +54,30 @@ router.post("", (req, res, next)=>{
     });
 });
 
+router.get("/:id", (req,res,next)=>{
+    Employee.findById(req.params.id).then(employeeData=>{
+        if(employeeData){
+            console.log(employeeData);
+            res.status(200).json({
+                message: "Successfully fetched",
+                employee: {
+                    id: employeeData._id,
+                    firstName: employeeData.firstName,
+                    lastName: employeeData.lastName,
+                    email: employeeData.email,
+                    role: employeeData.role,
+                    status: employeeData.status
+                }
+            });
+        }
+        else{
+            res.status(404).json({
+                message: "Not found"
+            });
+        }
+    });
+});
+
 router.get("", (req, res, next)=>{
     Employee.find().then(documents =>{
         console.log(documents);
@@ -91,5 +115,7 @@ router.put("/:id", (req,res,next)=>{
         });
     });
 });
+
+
 
 module.exports = router;
