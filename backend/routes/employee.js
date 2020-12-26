@@ -10,8 +10,16 @@ const Employee = require('../models/employee');
 router.delete("/:id", (req,res,next)=>{
     console.log("Working");
     console.log(req.params.id);
-    res.status(200).json({
-        message: "post deleted"
+    Employee.deleteOne({_id: req.params.id}).then(result =>{
+        console.log(result);
+        res.status(201).json({
+            message: 'Deleted the employee'
+        });
+    }).catch(err=>{
+        console.log(err);
+        res.status(401).json({
+            message: 'Not authorized'
+        });
     });
 });
 
