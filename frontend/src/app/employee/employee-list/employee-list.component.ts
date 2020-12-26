@@ -11,7 +11,7 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class EmployeeListComponent implements OnInit, OnDestroy {
   totalEmployees = 10;
-  employeesPerPage = 5;
+  employeesPerPage = 1;
   pageSizeOptons = [1,2,5,10];
   currentPage = 0;
   isLoading = false;
@@ -21,7 +21,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.employeeService.getEmployees();
+    this.employeeService.getEmployees(this.employeesPerPage, 1);
     this.employeesSubs = this.employeeService.getEmployeeUpdateListener().subscribe((employees: Employee[])=>{
       this.employees = employees;
       this.isLoading = false;
@@ -39,6 +39,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   }
 
   onChangedPage(pageEvent: PageEvent){
-    console.log(pageEvent);
+    this.currentPage = pageEvent.pageIndex+1;
+    this.employeesPerPage = pageEvent.pageSize;
+    this.employeeService.getEmployees(this.employeesPerPage, this.currentPage);
   }
 }

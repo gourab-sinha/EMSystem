@@ -79,8 +79,9 @@ router.get("/:id", (req,res,next)=>{
 });
 
 router.get("", (req, res, next)=>{
-    const pageSize = +req.query.pagsize;
+    const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
+    console.log(pageSize + ' ' + currentPage);
     const employeeQuery = Employee.find();
     if(pageSize && currentPage){
         employeeQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);

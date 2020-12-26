@@ -10,8 +10,9 @@ export class EmployeeService{
     private employees: Employee[] = [];
     private employeesUpdated = new Subject<Employee[]>();
     constructor(private router: Router, private http: HttpClient){}
-    getEmployees(){
-        this.http.get<{message: string, employees: any}>("http://localhost:3000/api/employees").pipe(
+    getEmployees(employeesPerPage: number, currentPage: number){
+        const queryParams = `?pagesize=${employeesPerPage}&page=${currentPage}`;
+        this.http.get<{message: string, employees: any}>("http://localhost:3000/api/employees/" + queryParams).pipe(
             map(employeeData =>{
                 return employeeData.employees.map(employee=>{
                     return {
