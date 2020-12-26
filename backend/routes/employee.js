@@ -2,12 +2,13 @@ const express = require('express');
 const { route } = require('../app/app');
 const router = express.Router();
 const Employee = require('../models/employee');
+const checkAuth = require('../middlewares/check-auth');
 // const bodyParser = require('body-parser');
 
 // router.use(bodyParser.json());
 // router.use(bodyParser.urlencoded({extended: false}));
 
-router.delete("/:id", (req,res,next)=>{
+router.delete("/:id", checkAuth, (req,res,next)=>{
     console.log("Working");
     console.log(req.params.id);
     Employee.deleteOne({_id: req.params.id}).then(result =>{
@@ -24,7 +25,7 @@ router.delete("/:id", (req,res,next)=>{
 });
 
 
-router.post("", (req, res, next)=>{
+router.post("", checkAuth, (req, res, next)=>{
     const employee = new Employee({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -105,7 +106,7 @@ router.get("", (req, res, next)=>{
     });
 });
 
-router.put("/:id", (req,res,next)=>{
+router.put("/:id", checkAuth, (req,res,next)=>{
     console.log("Put request");
     console.log(req.body);
     const employee = new Employee({

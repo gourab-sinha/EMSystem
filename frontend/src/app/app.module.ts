@@ -16,9 +16,11 @@ import { HeaderComponent } from './header/header.component';
 import { EmployeeListComponent } from './employee/employee-list/employee-list.component';
 import { EmployeeCreateComponent } from './employee/employee-create/employee-create.component';
 import { AppRoutingModule } from './app-routing.model';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { AuthInterceptor } from './auth/auth-interceptor';
+
 
 @NgModule({
   declarations: [
@@ -46,7 +48,7 @@ import { SignupComponent } from './auth/signup/signup.component';
     MatProgressSpinnerModule,
     MatPaginatorModule,
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -9,7 +9,9 @@ import { map } from 'rxjs/operators';
 export class EmployeeService{
     private employees: Employee[] = [];
     private employeesUpdated = new Subject<{employees: Employee[], totalCount: number}>();
+
     constructor(private router: Router, private http: HttpClient){}
+    
     getEmployees(employeesPerPage: number, currentPage: number){
         const queryParams = `?pagesize=${employeesPerPage}&page=${currentPage}`;
         this.http.get<{message: string, employees: any, totalCount: number}>("http://localhost:3000/api/employees/" + queryParams).pipe(
