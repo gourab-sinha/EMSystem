@@ -12,6 +12,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 // Routes
 const employeeRoutes = require('../routes/employee');
+const userRoutes = require('../routes/user');
 
 // Requests types and access control
 app.use((req,res,next)=>{
@@ -47,4 +48,5 @@ app.delete("/:id", (req,res,next)=>{
 })
 
 app.use('/api/employees/', employeeRoutes);
+app.use('/api/user/', userRoutes);
 module.exports = app;
