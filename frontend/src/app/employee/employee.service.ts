@@ -12,7 +12,7 @@ export class EmployeeService{
     constructor(private router: Router, private http: HttpClient){}
     getEmployees(){
         this.http.get<{message: string, employees: any}>("http://localhost:3000/api/employees").pipe(
-            map((employeeData)=>{
+            map(employeeData =>{
                 return employeeData.employees.map(employee=>{
                     return {
                         id: employee._id,
@@ -43,5 +43,11 @@ export class EmployeeService{
             this.router.navigate(["/"]);
         });
         
+    }
+
+    deleteEmployee(employeeId: string){
+        this.http.delete("http://localhost:3000/api/employees/" + employeeId).subscribe(()=>{
+            console.log("Deleted");
+        });
     }
 }

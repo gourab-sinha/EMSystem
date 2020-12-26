@@ -26,4 +26,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.employeesSubs.unsubscribe();
   }
 
+  onDelete(employeeId: string){
+    this.employeeService.deleteEmployee(employeeId);
+  }
+
 }

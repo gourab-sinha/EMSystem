@@ -39,5 +39,12 @@ app.get("", (req,res,next)=>{
     });
 });
 
+app.delete("/:id", (req,res,next)=>{
+    console.log(req.params.id);
+    res.status(201).json({
+        message: "Test Successful"
+    });
+})
+
 app.use('/api/employees/', employeeRoutes);
 module.exports = app;

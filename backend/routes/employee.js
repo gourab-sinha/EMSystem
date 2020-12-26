@@ -1,10 +1,20 @@
 const express = require('express');
+const { route } = require('../app/app');
 const router = express.Router();
 const Employee = require('../models/employee');
 // const bodyParser = require('body-parser');
 
 // router.use(bodyParser.json());
 // router.use(bodyParser.urlencoded({extended: false}));
+
+router.delete("/:id", (req,res,next)=>{
+    console.log("Working");
+    console.log(req.params.id);
+    res.status(200).json({
+        message: "post deleted"
+    });
+});
+
 
 router.post("", (req, res, next)=>{
     const employee = new Employee({
@@ -41,16 +51,7 @@ router.get("", (req, res, next)=>{
         console.log(documents);
         res.status(200).json({
             message: "Successfully fetched",
-            employees: documents.map(employee => {
-                return {
-                    id: employee._id,
-                    firstName: employee.firstName,
-                    lastName: employee.lastName,
-                    email: employee.email,
-                    role: employee.role,
-                    status: employee.status
-                };
-            })
+            employees: documents
         });
     }).catch(err=>{
         console.log(err);
@@ -59,5 +60,7 @@ router.get("", (req, res, next)=>{
         });
     });
 });
+
+
 
 module.exports = router;
