@@ -79,7 +79,13 @@ router.get("/:id", (req,res,next)=>{
 });
 
 router.get("", (req, res, next)=>{
-    Employee.find().then(documents =>{
+    const pageSize = +req.query.pagsize;
+    const currentPage = +req.query.page;
+    const employeeQuery = Employee.find();
+    if(pageSize && currentPage){
+        employeeQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
+    }
+    employeeQuery.find().then(documents =>{
         console.log(documents);
         res.status(200).json({
             message: "Successfully fetched",
