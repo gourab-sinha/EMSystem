@@ -17,13 +17,17 @@ import { EmployeeListComponent } from './employee/employee-list/employee-list.co
 import { EmployeeCreateComponent } from './employee/employee-create/employee-create.component';
 import { AppRoutingModule } from './app-routing.model';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     EmployeeListComponent,
-    EmployeeCreateComponent
+    EmployeeCreateComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
