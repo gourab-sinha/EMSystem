@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
@@ -39,6 +40,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatCheckboxModule,
     MatSelectModule,
     MatProgressSpinnerModule,
+    MatPaginatorModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

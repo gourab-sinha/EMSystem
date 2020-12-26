@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Employee } from '../employee.model';
 import { EmployeeService } from '../employee.service';
 import { Subscription } from 'rxjs';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-employee-list',
@@ -9,6 +10,10 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./employee-list.component.css']
 })
 export class EmployeeListComponent implements OnInit, OnDestroy {
+  totalEmployees = 10;
+  employeesPerPage = 5;
+  pageSizeOptons = [1,2,5,10];
+  currentPage = 0;
   isLoading = false;
   employees: Employee[] = [];
   private employeesSubs: Subscription;
@@ -33,4 +38,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.employeeService.deleteEmployee(employeeId);
   }
 
+  onChangedPage(pageEvent: PageEvent){
+    console.log(pageEvent);
+  }
 }
