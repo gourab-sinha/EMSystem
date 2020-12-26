@@ -11,7 +11,7 @@
         <p *ngIf="employee.status">Active</p>
         <p *ngIf="!employee.status">Inactive</p>
         <mat-action-row>
-            <button mat-button color="primary">EDIT</button>
+            <a mat-button color="primary" [routerLink]="['/edit', employee.id]">EDIT</a>
             <button *ngIf="employee.status" mat-button color="warn" (click)="onDelete(employee.id)">DELETE</button>
         </mat-action-row>
     </mat-expansion-panel>

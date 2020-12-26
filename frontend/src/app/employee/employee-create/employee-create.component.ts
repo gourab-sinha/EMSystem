@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Routes } from '@angular/router';
+import { ActivatedRoute, ParamMap, Routes } from '@angular/router';
 import { Employee } from '../employee.model';
 import { EmployeeService } from '../employee.service';
 import { Role } from '../role.model';
@@ -12,6 +12,9 @@ import { Role } from '../role.model';
 })
 export class EmployeeCreateComponent implements OnInit {
 
+  private employeeId: string;
+  private mode = 'create';
+  employee: Employee;
   form: FormGroup;
   roles: Role[] = [
     {value: 'Software Developer', viewValue:'Software Developer'},
@@ -21,8 +24,8 @@ export class EmployeeCreateComponent implements OnInit {
     {value: 'Team Lead', viewValue:'Team Lead'},
     {value: 'Technical Architech', viewValue:'Technical Architech'},
   ];
-  constructor(public employeeService: EmployeeService) { }
-
+  constructor(public employeeService: EmployeeService, public route: ActivatedRoute) { }
+  
   ngOnInit(): void {
     this.form = new FormGroup({
       firstName: new FormControl(null, {validators: [Validators.required, Validators.minLength(3)]}),
@@ -31,13 +34,28 @@ export class EmployeeCreateComponent implements OnInit {
       role: new FormControl(null, {validators: [Validators.required]}),
       status: new FormControl(false,{validators: [Validators.required]}),
     });
+    this.route.paramMap.subscribe((paramMap: ParamMap)=>{
+      if(paramMap.has('employeeId')){
+        this.mode = 'edit';
+        this.employeeId = paramMap.get('employeeId');
+        console.log(this.employeeId);
+        this.employee = this.employeeService.getEmployee(this.employeeId);
+        console.log("OnInit");
+        console.log(this.employee);
+      }
+      else{
+        this.mode = 'create';
+        this.employeeId = null;
+      }
+    });
   }
 
   onSaveEmployee(){
     if(this.form.invalid){
       return;
     }
-
+    
+    console.log(this.mode);
     const employee :Employee = {
       id: null,
       firstName: this.form.value.firstName,
@@ -46,9 +64,18 @@ export class EmployeeCreateComponent implements OnInit {
       role: this.form.value.role,
       status: Boolean(this.form.value.status)
     };
-    console.log(employee);
-    this.employeeService.addEmployee(employee);
-    this.form.reset();
+
+    if(this.mode === 'create'){
+      this.employeeService.addEmployee(employee);
+
+    }
+    else{
+      console.log("Edit employee");
+      employee.id = this.employeeId;
+      this.employeeService.updateEmployee(employee);
+    }
+    
+    // this.form.reset();
   }
 
 }

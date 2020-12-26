@@ -69,6 +69,27 @@ router.get("", (req, res, next)=>{
     });
 });
 
-
+router.put("/:id", (req,res,next)=>{
+    console.log("Put request");
+    console.log(req.body);
+    const employee = new Employee({
+        _id: req.body.id,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        role: req.body.role,
+        status: req.body.status
+    });
+    Employee.updateOne({_id: req.params.id}, employee).then(result =>{
+        console.log(result);
+        res.status(200).json({
+            message: 'Updated successfully'
+        });
+    }).catch(err=>{
+        res.status(401).json({
+            message: err
+        });
+    });
+});
 
 module.exports = router;

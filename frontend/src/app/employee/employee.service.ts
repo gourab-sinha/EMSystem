@@ -35,6 +35,13 @@ export class EmployeeService{
         return this.employeesUpdated.asObservable();
     }
 
+    getEmployee(employeeId: string){
+        const employee = {...this.employees.find(employee => employee.id===employeeId)};
+        console.log("Get Employee");
+        console.log(employee)
+        return employee;
+    }    
+
     addEmployee(employee: Employee){
         this.http.post<{message: string, employee: Employee}>("http://localhost:3000/api/employees", employee).subscribe((response)=>{
             console.log(response);
@@ -45,6 +52,15 @@ export class EmployeeService{
         
     }
 
+    updateEmployee(employeeInfo: Employee){
+        console.log("Service udpate");
+        console.log(employeeInfo.id);
+        this.http.put<{message: string}>("http://localhost:3000/api/employees/" + employeeInfo.id, employeeInfo).subscribe(response =>{
+            console.log(response);
+
+        });
+    }
+    
     deleteEmployee(employeeId: string){
         this.http.delete("http://localhost:3000/api/employees/" + employeeId).subscribe(()=>{
             console.log("Deleted");
