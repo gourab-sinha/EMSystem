@@ -11,7 +11,7 @@ import { Role } from '../role.model';
   styleUrls: ['./employee-create.component.css']
 })
 export class EmployeeCreateComponent implements OnInit {
-
+  isReadOnly = false;
   private employeeId: string;
   private mode = 'create';
   employee: Employee;
@@ -44,8 +44,18 @@ export class EmployeeCreateComponent implements OnInit {
         this.employeeService.getEmployee(this.employeeId).subscribe(employeeData=>{
           this.employee = employeeData.employee;
           this.isLoading = false;
+          this.isReadOnly = !this.employee.status;
+          if(this.isReadOnly){
+            console.log(this.isReadOnly);
+            this.form.controls.firstName.disable();
+            this.form.controls.lastName.disable();
+            this.form.controls.role.disable();
+            this.form.controls.email.disable();
+          }
           // console.log(employeeData.employee);
         });
+
+        
         console.log("OnInit");
         console.log(this.employee);
       }
