@@ -31,7 +31,8 @@ router.post("", checkAuth, (req, res, next)=>{
         lastName: req.body.lastName,
         email: req.body.email,
         role: req.body.role,
-        status: req.body.status
+        status: req.body.status,
+        creator: req.userData.userId
     });
 
     employee.save().then(employeeData=>{

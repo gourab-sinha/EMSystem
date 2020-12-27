@@ -24,7 +24,8 @@ export class EmployeeService{
                         lastName: employee.lastName,
                         email: employee.email,
                         role: employee.role,
-                        status: employee.status
+                        status: employee.status,
+                        creator: employee.creator
                     };
                 }), totalCount: employeeData.totalCount
                 };

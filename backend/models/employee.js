@@ -7,7 +7,8 @@ const employeeSchema = new mongoose.Schema({
     lastName: {type: String, required:true},
     email: {type: String, required:true, unique:true},
     role: {type: String, required:true},
-    status: {type: Boolean, required:true}
+    status: {type: Boolean, required:true},
+    creator: {type: mongoose.Schema.Types.ObjectId, ref: "User", required:true}
 });
 
 employeeSchema.plugin(uniqueValidator);
