@@ -11,7 +11,7 @@
         </p>
         <p *ngIf="employee.status">Active</p>
         <p *ngIf="!employee.status">Inactive</p>
-        <mat-action-row *ngIf="userIsAuthenticated">
+        <mat-action-row *ngIf="userIsAuthenticated && employee.creator === user.userId">
             <a mat-button color="primary" [routerLink]="['/edit', employee.id]">EDIT</a>
             <button *ngIf="employee.status" mat-button color="warn" (click)="onDelete(employee.id)">DELETE</button>
         </mat-action-row>

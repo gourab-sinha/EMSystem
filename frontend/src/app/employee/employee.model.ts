@@ -5,4 +5,5 @@ export interface Employee{
     role: string;
     email: string;
     status: boolean;
+    creator: string
 }

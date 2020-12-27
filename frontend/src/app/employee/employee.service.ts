@@ -45,6 +45,7 @@ export class EmployeeService{
     }    
 
     addEmployee(employee: Employee){
+        
         this.http.post<{message: string, employee: Employee}>("http://localhost:3000/api/employees", employee).subscribe((response)=>{
             this.router.navigate(["/"]);
         });

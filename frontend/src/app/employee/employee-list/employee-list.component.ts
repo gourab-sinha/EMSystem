@@ -4,6 +4,7 @@ import { EmployeeService } from '../employee.service';
 import { Subscription } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 import { AuthService } from 'src/app/auth/auth.service';
+import { User } from 'src/app/auth/user.model';
 
 @Component({
   selector: 'app-employee-list',
@@ -18,6 +19,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   isLoading = false;
   employees: Employee[] = [];
   userIsAuthenticated = false;
+  user: User;
   private employeesSubs: Subscription;
   private statusSub: Subscription; 
 
@@ -26,6 +28,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isLoading = true;
     this.employeeService.getEmployees(this.employeesPerPage, 1);
+    this.user = this.authService.getUserData();
     this.employeesSubs = this.employeeService.getEmployeeUpdateListener().subscribe(
       (employeeData:{employees: Employee[], totalCount: number})=>{
       this.employees = employeeData.employees;
@@ -35,6 +38,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.statusSub = this.authService.getAuthStatusListener().subscribe(isAuthenticated=>{
       this.userIsAuthenticated = isAuthenticated;
+      // this.user = this.authService.getUserData();  
     });
     console.log(this.employees);
   }
