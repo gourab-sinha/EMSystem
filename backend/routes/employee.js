@@ -11,11 +11,17 @@ const checkAuth = require('../middlewares/check-auth');
 router.delete("/:id", checkAuth, (req,res,next)=>{
     console.log("Working");
     console.log(req.params.id);
-    Employee.deleteOne({_id: req.params.id}).then(result =>{
-        console.log(result);
-        res.status(201).json({
-            message: 'Deleted the employee'
-        });
+    Employee.deleteOne({_id: req.params.id, creator: req.userData.userId}).then(result =>{
+        if(result.n > 0){
+            res.status(200).json({
+                message: 'deleted successfully'
+            });
+        }
+        else{
+            res.status(401).json({
+                message: 'Not authorized'
+            });
+        }
     }).catch(err=>{
         console.log(err);
         res.status(401).json({
@@ -118,11 +124,18 @@ router.put("/:id", checkAuth, (req,res,next)=>{
         role: req.body.role,
         status: req.body.status
     });
-    Employee.updateOne({_id: req.params.id}, employee).then(result =>{
-        console.log(result);
-        res.status(200).json({
-            message: 'Updated successfully'
-        });
+    Employee.updateOne({_id: req.params.id, creator: req.userData.userId}, employee).then(result =>{
+        if(result.n > 0){
+            res.status(200).json({
+                message: 'Updated successfully'
+            });
+        }
+        else{
+            res.status(401).json({
+                message: 'Not authorized'
+            });
+        }
+        
     }).catch(err=>{
         res.status(401).json({
             message: err
